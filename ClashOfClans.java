@@ -44,6 +44,15 @@ public class ClashOfClans{
 	private String server;
 	private int port;
 	private String username;
+
+
+	static Ground[][] button = new Ground[45][45]; // yung para sa mapa
+	static BuildButton[] bldg = new BuildButton[5]; // yung para sa menu
+	static JButton troopbutton = new JButton("Place Troop");
+
+	static int bldgflag = 0; // kung may ibibuild o wala
+	static int troopflag = 0; // kung may ilalagay na troop o wala
+	
 	
 	public ClashOfClans(String server, int port, String username){
 		this.server = server;
@@ -146,7 +155,12 @@ public class ClashOfClans{
 		//game
 		gamePanel.setPreferredSize(new Dimension(700, 700));
 		gamePanel.setBackground(Color.PINK);
-		gamePanel.setLayout(new GridBagLayout());
+		gamePanel.setLayout(new GridLayout(45,45));
+
+		//options
+		optionsPanel.setPreferredSize(new Dimension(300, 700));
+		//optionsPanel.setBackground(Color.GREEN);
+		optionsPanel.setLayout(new GridLayout(5, 1));
 // ------------------------------------------------------------------------------------------------------------ //
 		//chat layout
 		a.gridwidth = GridBagConstraints.REMAINDER;
@@ -184,11 +198,37 @@ public class ClashOfClans{
 				}
 			});
 
+//---------------------------------------- CENTER PANEL ------------------------------------------------------//
+
+//------------------------------------------------------------------------------------------------------------//
+
+//----------------------------------------OPTIONS PANEL -------------------------------------------------------//
+		// yung sa menu buttons
+		for(int i=0; i<5; i++){
+			bldg[i] = new BuildButton(i+1);
+			bldg[i].setText(bldg[i].bldgname);
+			bldg[i].addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent event){
+						BuildButton src = (BuildButton)event.getSource();
+						bldgflag = src.bldgnum;
+						if(troopflag!=0)
+							troopflag = 0;
+				}
+			});
+			optionsPanel.add(bldg[i]);
+		}
+		troopbutton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				troopflag = 1;
+				if(bldgflag!=0)
+					bldgflag = 0;
+			}
+		});
+//-----------------------------------------------------------------------------------------------------------//
+		
 // ------------------------------------------------------------------------------------------------------------ //
-		//options
-		optionsPanel.setPreferredSize(new Dimension(200, 700));
-		optionsPanel.setBackground(Color.GREEN);
-		optionsPanel.setLayout(new GridBagLayout());
+		
+		
 		//adding the panels to frame
 		frame.add(chatPanel, BorderLayout.WEST);
 		frame.add(gamePanel, BorderLayout.CENTER);
