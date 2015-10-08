@@ -53,6 +53,9 @@ public class Client{
 
 	static int bldgflag = 0; // kung may ibibuild o wala
 	static int troopflag = 0; // kung may ilalagay na troop o wala
+
+	static  Ground src;
+	static  Ground gr;
 	
 	public Client(String server, int port, String username){
 		this.server = server;
@@ -236,8 +239,8 @@ public class Client{
 				button[i][j].col = j;
 				button[i][j].addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent event){
-							Ground src = (Ground)event.getSource();
-							Ground gr = button[src.row][src.col];
+							src = (Ground)event.getSource();
+							gr = button[src.row][src.col];
 							if(bldgflag !=0){ // pag may ibibuild
 								boolean valid = false;
 								// boundrow and boundcol
